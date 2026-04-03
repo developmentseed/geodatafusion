@@ -32,10 +32,10 @@ jobs:
             target: ppc64le
             manylinux: auto
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@caf0cab7a618c569241d31dcd442f54681755d39 # v3
         with:
           enable-cache: true
           version: "0.8.x"
@@ -45,7 +45,7 @@ jobs:
         run: uv python install 3.9 pypy3.10
 
       - name: Build wheels
-        uses: PyO3/maturin-action@v1
+        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i 3.9 -i pypy3.10 --manifest-path python/Cargo.toml
@@ -53,7 +53,7 @@ jobs:
           manylinux: ${{ matrix.platform.manylinux }}
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: wheels-linux-${{ matrix.platform.target }}
           path: dist
@@ -70,15 +70,15 @@ jobs:
           - runner: macos-14
             target: aarch64
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4
         with:
           python-version: 3.x
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
 
       - name: Build wheels - ${{ matrix.platform.target }}
-        uses: PyO3/maturin-action@v1
+        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist -i 3.9 -m python/Cargo.toml
@@ -90,7 +90,7 @@ jobs:
           python -c "import geodatafusion"
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: wheels-macos-${{ matrix.platform.target }}
           path: dist
@@ -101,17 +101,17 @@ jobs:
       matrix:
         target: [x64]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4
         with:
           python-version: 3.11
           architecture: ${{ matrix.target }}
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
 
       - name: Build wheels
-        uses: PyO3/maturin-action@v1
+        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1
         with:
           target: ${{ matrix.target }}
           args: --release --out dist -i 3.9 -m python/Cargo.toml
@@ -122,7 +122,7 @@ jobs:
           python -c "import geodatafusion"
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: wheels-windows-${{ matrix.target }}
           path: dist
@@ -138,14 +138,14 @@ jobs:
   #         - x86_64-unknown-linux-musl
   #         - i686-unknown-linux-musl
   #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-python@v4
+  #     - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+  #     - uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4
   #       with:
   #         python-version: 3.x
   #         architecture: x64
 
   #     - name: Build wheels
-  #       uses: PyO3/maturin-action@v1
+  #       uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1
   #       with:
   #         target: ${{ matrix.target }}
   #         manylinux: musllinux_1_2
@@ -180,14 +180,14 @@ jobs:
   #           arch: armv7
 
   #   steps:
-  #     - uses: actions/checkout@v4
+  #     - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-  #     - uses: actions/setup-python@v4
+  #     - uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4
   #       with:
   #         python-version: 3.x
 
   #     - name: Build wheels
-  #       uses: PyO3/maturin-action@v1
+  #       uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1
   #       with:
   #         target: ${{ matrix.platform.target }}
   #         manylinux: musllinux_1_2
@@ -221,9 +221,9 @@ jobs:
       # Used to upload release artifacts
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
       - name: Publish to PyPI
-        uses: PyO3/maturin-action@v1
+        uses: PyO3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
         with:
